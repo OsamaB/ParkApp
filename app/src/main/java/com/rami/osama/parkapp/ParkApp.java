@@ -14,6 +14,7 @@ public final class ParkApp extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_park_app);
 
+
         FragmentManager fm = getFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.parking_container);
 
