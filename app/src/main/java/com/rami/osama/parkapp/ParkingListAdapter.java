@@ -35,8 +35,10 @@ public final class ParkingListAdapter extends ArrayAdapter<Parking>
 
         nameText.setText(parking.mAddress);
         //TODO: Införa beräkning av avstånd
-        distanceText.setText(R.string.distance + "500m");
 
+        distanceText.setText("Distance: " + "500m");
+
+        // TODO: Fixa så strängar skrivs ut istället för int's
         Integer parkingSpots = parking.mParkingSpots;
         String parkSpots = Integer.toString(parkingSpots);
         spotsText.setText("(" + parkSpots + ")");

@@ -21,6 +21,7 @@ public final class ParkingStorage {
     private static ParkingStorage INSTANCE;
     private final Map<String, Parking> mParkings;
     private final Context mContext;
+    MyLocationListener locationListener = new MyLocationListener();
 
     private ParkingStorage(Context context) {
         mParkings = new HashMap<>();
@@ -44,7 +45,8 @@ public final class ParkingStorage {
     private int radius;
 // TODO: Byta ut lat och lng mot mobilens värden
     public void getParkings(final int radius) throws JSONException {
-        this.radius = radius; ParkRestClient.get("within?radius=" + radius + "&lat=59.293802&lng=18.078095&maxFeatures=10&outputFormat=json&apiKey=a7984ad9-3548-420b-a0d6-071ae94f462b", null, new JsonHttpResponseHandler() {
+        this.radius = radius;
+        ParkRestClient.get("within?radius=" + radius + "&lat=59.293802&lng=18.078095&maxFeatures=10&outputFormat=json&apiKey=a7984ad9-3548-420b-a0d6-071ae94f462b", null, new JsonHttpResponseHandler() {
 
             private String streetname, id;
             private int parkingSpots;
@@ -62,9 +64,6 @@ public final class ParkingStorage {
                 // Tar in alla objekt (parkeringsområden) som skickats in
                 try {
                     features = response.getJSONArray("features");
-
-
-                    System.out.println("featuresLength: " + features.length());
 
                     if(features.length() < 10){
                         int newRadius = radius + 100;
@@ -86,20 +85,14 @@ public final class ParkingStorage {
                         lati = firstCoordinates.getDouble(1);
                         // Sparar antalet parkeringsplatser i "parkingsSpots"
                         parkingSpots = coordinates.length();
-                        // TEST!
-                        System.out.println("spots: " + parkingSpots + "coordinates: " + coordinates);
                         properties = feature.getJSONObject("properties");
                         // Sparar gatunamnet
                         streetname = properties.getString("STREET_NAME");
-                        // TEST!
-                        System.out.println("streetname: " + streetname);
 
 
                         Parking parking = new Parking(streetname, parkingSpots, lati, longi, id);
                         mParkings.put(id, parking);
                     }
-                        System.out.println("mParkings: " + mParkings.keySet());
-                        System.out.println("mParkings: " + mParkings.values());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
