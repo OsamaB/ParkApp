@@ -19,4 +19,12 @@ public final class Parking
         mDistance = distance;
         mId = id;
     }
+
+    public double getLatitude() {
+        return mLatitude;
+    }
+
+    public double getLongitude() {
+        return mLongitude;
+    }
 }

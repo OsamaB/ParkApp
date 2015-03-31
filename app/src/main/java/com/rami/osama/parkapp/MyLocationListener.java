@@ -1,12 +1,8 @@
 package com.rami.osama.parkapp;
 
-import android.app.Service;
-import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.util.Log;
 
 class MyLocationListener implements LocationListener {
 
@@ -21,8 +17,8 @@ class MyLocationListener implements LocationListener {
         return location;
     }
 
-    @Override
     // Hämta GPS-position när man förflyttat sig (uppdaterad position)
+    @Override
     public void onLocationChanged(Location loc) {
         longitude = loc.getLongitude();
         latitude = loc.getLatitude();

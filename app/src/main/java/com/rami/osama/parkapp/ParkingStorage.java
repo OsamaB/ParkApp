@@ -2,7 +2,6 @@ package com.rami.osama.parkapp;
 
 import android.content.Context;
 import android.location.Location;
-import android.os.SystemClock;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -54,8 +53,8 @@ public final class ParkingStorage {
 
         phoneLat = String.valueOf(MyLocationListener.latitude);
         phoneLong = String.valueOf(MyLocationListener.longitude);
-                System.out.println(phoneLat + " ParkStore " + phoneLong);
-        ParkRestClient.get("within?radius=" + radius + "&lat=" + "59.8667" + "&lng=" + "18.5333" + "&maxFeatures=10&outputFormat=json&apiKey=a7984ad9-3548-420b-a0d6-071ae94f462b", null, new JsonHttpResponseHandler() {
+                System.out.println(phoneLat + " ParkStorage " + phoneLong);
+        ParkRestClient.get("within?radius=" + radius + "&lat=" + "59.28526308" + "&lng=" + "18.06315422" + "&maxFeatures=10&outputFormat=json&apiKey=a7984ad9-3548-420b-a0d6-071ae94f462b", null, new JsonHttpResponseHandler() {
 
             private String streetname, id;
             private int parkingSpots;
@@ -63,13 +62,14 @@ public final class ParkingStorage {
             private JSONArray features, coordinates, firstCoordinates;
             private JSONObject feature, geometry, properties;
 
-            /*@Override
+            @Override
             public void onStart() {
-                // called before request is started
-            }*/
+                System.out.println("!!! onStart i ParkingStorage !!!");
+            }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                System.out.println("!!! onSuccess i ParkStore");
                 // Tar in alla objekt (parkeringsområden) som skickats in
                 try {
                     features = response.getJSONArray("features");
@@ -77,7 +77,6 @@ public final class ParkingStorage {
                     if (features.length() < 10) {
                         int newRadius = radius + 100;
                         getParkings(newRadius);
-//                        return;
                     }
 
                     for (int i = 0; i < features.length(); i++) {
@@ -115,12 +114,12 @@ public final class ParkingStorage {
                 /*@Override
                 public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
                     // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                }
+                }*/
 
                 @Override
                 public void onRetry(int retryNo) {
-                    // called when request is retried
-                }*/
+                    System.out.println("!!! onRetry in ParkingStorage !!!");
+                }
         });
     }
 
