@@ -1,6 +1,7 @@
 package com.rami.osama.parkapp;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,11 +35,9 @@ public final class ParkingListAdapter extends ArrayAdapter<Parking>
         Parking parking = getItem(position);
 
         nameText.setText(parking.mAddress);
-        //TODO: Införa beräkning av avstånd
+        Resources rs = getContext().getResources();
+        distanceText.setText(rs.getString(R.string.distance) + " " + parking.mDistance + "m");
 
-        distanceText.setText("Distance: " + "500m");
-
-        // TODO: Fixa så strängar skrivs ut istället för int's
         Integer parkingSpots = parking.mParkingSpots;
         String parkSpots = Integer.toString(parkingSpots);
         spotsText.setText("(" + parkSpots + ")");

@@ -2,4 +2,7 @@
     <string name="app_name">Parkapp</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="action_settings">settings</string>
+    <string name="distance">Distance: </string>
+    <string name="app_map">ParkMap</string>
 </resources>

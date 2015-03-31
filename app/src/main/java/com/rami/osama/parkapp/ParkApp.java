@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.location.Criteria;
+import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-
-
+import android.os.SystemClock;
+import android.util.Log;
 
 public final class ParkApp extends Activity {
 
@@ -16,14 +18,24 @@ public final class ParkApp extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_park_app);
-
+        System.out.println(" ---> ParkApp <--- ");
         LocationManager locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);
 
-        LocationListener locationListener = new MyLocationListener();
-        locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+        Criteria criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_FINE);
+        criteria.setAltitudeRequired(false);
+        criteria.setBearingRequired(false);
+        criteria.setCostAllowed(true);
+        criteria.setPowerRequirement(Criteria.POWER_LOW);
 
+        String provider = locationManager.getBestProvider(criteria, true);
+
+        Location location = locationManager.getLastKnownLocation(provider);
+
+        MyLocationListener locationListener = new MyLocationListener();
+        locationManager.requestLocationUpdates(
+                provider, 30000, 10, locationListener);
 
         FragmentManager fm = getFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.parking_container);
